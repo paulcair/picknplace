@@ -3,12 +3,12 @@ import time
 
 #create action array each row is a command to a servo with {servo_id, angle}
 action = [
-    {'servo_id': 1, 'angle': 2000},
-    {'servo_id': 2, 'angle': 1000},
-    {'servo_id': 3, 'angle': 1000},
-    {'servo_id': 4, 'angle': 1000},
-    {'servo_id': 5, 'angle': 1000},
-    {'servo_id': 6, 'angle': 1000}
+    {'servo_id': 1, 'angle': 2200},
+    {'servo_id': 2, 'angle': 500},
+    {'servo_id': 3, 'angle': 500},
+    {'servo_id': 4, 'angle': 500},
+    {'servo_id': 5, 'angle': 500},
+    {'servo_id': 6, 'angle': 500}
 ]
 
 print("Starting servo control")
@@ -99,8 +99,34 @@ def move_servo(action_array, time_ms):
 # Scripts to run
 get_battery_voltage()
 
+
+# Define the angle ranges for each servo
+angle_ranges = {
+    1: range(1500, 2501, 500),  # Servo 1: 1500 to 2500
+    2: range(500, 2501, 500),   # Servo 2: 500 to 2500
+    3: range(500, 2501, 500),   # Servo 3: 500 to 2500
+    4: range(500, 2501, 500),   # Servo 4: 500 to 2500
+    5: range(500, 2501, 500),   # Servo 5: 500 to 2500
+    6: range(500, 2501, 500)    # Servo 6: 500 to 2500
+}
+
 move_servo(action_array=action, time_ms=500)
-run_action_group(ser, group_number=0, run_times=1, estimated_time=1)
+#run_action_group(ser, group_number=0, run_times=1, estimated_time=1)
+
+# Iterate over servos from 6 down to 1
+for servo_id in range(2, 0, -1):
+    # Iterate over the angle range for the current servo
+    for angle in angle_ranges[servo_id]:
+        # Update the action array for the current servo
+        this_action = [{'servo_id': servo_id, 'angle': angle},
+                       {'servo_id': 1, 'angle': 2200},
+                       ]
+        
+        # Move the servo to the current angle
+        move_servo(action_array=this_action, time_ms=500)
+        move_servo(action_array=action, time_ms=1000)
+        
+    
 
 # Close the serial connection when done
 ser.close()
