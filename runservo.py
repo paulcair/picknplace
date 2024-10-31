@@ -118,12 +118,13 @@ for servo_id in range(2, 0, -1):
     # Iterate over the angle range for the current servo
     for angle in angle_ranges[servo_id]:
         # Update the action array for the current servo
-        this_action = [{'servo_id': servo_id, 'angle': angle},
-                       {'servo_id': 1, 'angle': 2200},
-                       ]
+        this_action = [{'servo_id': servo_id, 'angle': angle}]
+
+        if servo_id != 1:
+            this_action.append({'servo_id': 1, 'angle': 2200})
         
         # Move the servo to the current angle
-        move_servo(action_array=this_action, time_ms=500)
+        move_servo(action_array=this_action, time_ms=100)
         move_servo(action_array=action, time_ms=1000)
         
     
