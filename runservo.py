@@ -29,7 +29,7 @@ action = [
 
 print("Starting servo control")
 # Open serial connection (adjust port and baudrate as needed)
-ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+ser = serial.Serial('/dev/ttyUSB1', 9600, timeout=1)
 
 def get_battery_voltage():
     # Packet to request battery voltage
@@ -130,7 +130,7 @@ move_servo(action_array=action, time_ms=500)
 #run_action_group(ser, group_number=0, run_times=1, estimated_time=1)
 
 # Iterate over servos from 6 down to 1
-for servo_id in range(2, 0, -1):
+for servo_id in range(6, 0, -1):
     # Iterate over the angle range for the current servo
     for angle in angle_ranges[servo_id]:
         # Update the action array for the current servo
