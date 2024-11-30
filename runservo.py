@@ -1,7 +1,7 @@
 """
 runservo.py
 
-This is a script to control leArm 6DOF robot via serial connection. This script is writtent to run through each servo one at a time in order to determine the range of motion for each servo and to defined the Denavit-Hartenberg parameters for each joint.
+This is a script to control leArm 6DOF robot via serial connection. This script is written to run through each servo one at a time in order to determine the range of motion for each servo and to defined the Denavit-Hartenberg parameters for each joint.
 
 This script is used to control servos via a serial connection. It includes functions to:
 - Get the battery voltage of the connected device.
@@ -10,8 +10,8 @@ This script is used to control servos via a serial connection. It includes funct
 
 The script initializes a serial connection, defines action arrays, and iterates over servos to perform movements.
 
-Author: [Your Name]
-Date: [Date]
+Author: Paul Cairns
+Date: Nov 30th, 2024
 """
 
 import serial
