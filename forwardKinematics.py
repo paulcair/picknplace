@@ -43,7 +43,24 @@ S_5 = int(theta_2_deg/180*2000+500)
 S_6 = int(theta_1_deg/180*2000+500)    
 angles = [S_1, S_2, S_3, S_4, S_5, S_6]
 
-# Send the command to move the robot to the desired poisiton.
-commandRobot.move(starting_position)
-commandRobot.move(angles)
-commandRobot.move(starting_position)
+def main():
+    robot = commandRobot.RobotController()
+
+    # Check if the serial connection was established successfully
+    if robot.ser is None:
+        print("Failed to establish serial connection. Exiting.")
+        return
+
+    try:
+        # Send the command to move the robot to the desired position.
+        print("Moving Robot...")
+        robot.move(starting_position)
+        robot.move(angles)
+        robot.move(starting_position)
+    except Exception as e:
+        print(f"Error during movement: {e}")
+    finally:
+        robot.close()
+
+if __name__ == "__main__":
+    main()
