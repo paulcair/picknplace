@@ -14,7 +14,7 @@ Date: Nov 30th, 2024
 """
 import math
 import numpy as np
-import runServo
+import commandRobot
 
 #input desired joint angles (0-180) in degrees and desired claw width (0<x<30)
 theta_1_deg = 90
@@ -33,3 +33,5 @@ theta_5 = math.radians(theta_5_deg)
 
 # Convert the inputs into servo values by maping them from degrees to a value between 500 and 2500 that will be sent to the servo. Note that servos are defined in reverse order as the thetas.
 S_6 =  (30-tool_x)*2000/60+1500
+
+print(S_6)

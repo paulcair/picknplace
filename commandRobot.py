@@ -1,7 +1,7 @@
 """
 runservo.py
 
-This is a script to control leArm 6DOF robot via serial connection. This script is written to run through each servo one at a time in order to determine the range of motion for each servo and to defined the Denavit-Hartenberg parameters for each joint.
+This is a script to control leArm 6DOF robot via serial connection. This script is designed to simply command the robot from other scripts.
 
 This script is used to control servos via a serial connection. It includes functions to:
 - Get the battery voltage of the connected device.
@@ -118,16 +118,6 @@ def main():
         {'servo_id': 6, 'angle': 500}
     ]
 
-    # Define the angle ranges for each servo
-    angle_ranges = {
-        1: range(1500, 2501, 500),  # Servo 1: 1500 to 2500
-        2: range(500, 2501, 500),   # Servo 2: 500 to 2500
-        3: range(500, 2501, 500),   # Servo 3: 500 to 2500
-        4: range(500, 2501, 500),   # Servo 4: 500 to 2500
-        5: range(500, 2501, 500),   # Servo 5: 500 to 2500
-        6: range(500, 2501, 500)    # Servo 6: 500 to 2500
-    }
-
     while True:
         ser = initialize_serial()
         if ser: 
@@ -135,21 +125,6 @@ def main():
                 print("Starting servo control")
                 get_battery_voltage()
                 move_servo(action_array=action, time_ms=500)
-                #run_action_group(ser, group_number=0, run_times=1, estimated_time=1)
-
-                # Iterate over servos from 6 down to 1
-                for servo_id in range(6, 0, -1):
-                    # Iterate over the angle range for the current servo
-                    for angle in angle_ranges[servo_id]:
-                        # Update the action array for the current servo
-                        this_action = [{'servo_id': servo_id, 'angle': angle}]
-
-                        if servo_id != 1:
-                            this_action.append({'servo_id': 1, 'angle': 2200})
-                        
-                        # Move the servo to the current angle
-                        move_servo(action_array=this_action, time_ms=100)
-                        move_servo(action_array=action, time_ms=1000)
             finally:
                 ser.close()
                 break
