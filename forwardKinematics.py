@@ -42,7 +42,6 @@ S_4 = int(theta_3_deg/180*2000+500)
 S_5 = int(theta_2_deg/180*2000+500)
 S_6 = int(theta_1_deg/180*2000+500)    
 angles = [S_1, S_2, S_3, S_4, S_5, S_6]
-print(angles)
 
 # Send the command to move the robot to the desired poisiton.
 commandRobot.move(starting_position)

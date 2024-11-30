@@ -21,7 +21,7 @@ import time
 def initialize_serial(port='/dev/ttyUSB0', baudrate=9600, timeout=1):
     try:
         ser = serial.Serial(port, baudrate)
-        print("Serial connection established.")
+        #print("Serial connection established.")
         return ser
     except serial.SerialException as e:
         print(f"Failed to establish serial connection: {e}")
@@ -100,10 +100,10 @@ def move_servo(ser, action_array, time_ms):
         # Append servo ID and angle bytes to the packet
         packet.extend([action['servo_id'], angle_low, angle_high])
     
-    print("Sent packet:", packet)
+    #print("Sent packet:", packet)
     # Convert to byte array and send the packet
     ser.write(bytearray(packet))
-    print(f"Waiting for: {time_ms / 1000 +1} s")
+    #print(f"Waiting for: {time_ms / 1000 +1} s")
     time.sleep(time_ms / 1000 + 1)
     
 def move(angles):
