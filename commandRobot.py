@@ -28,7 +28,7 @@ def initialize_serial(port='/dev/ttyUSB0', baudrate=9600, timeout=1):
         return None
 
 
-def get_battery_voltage():
+def get_battery_voltage(ser):
     # Packet to request battery voltage
     packet = [0x55, 0x55, 0x02, 0x0F]  # Header + Length + Command (CMD_GET_BATTERY_VOLTAGE)
     ser.write(bytearray(packet))
@@ -70,7 +70,7 @@ def run_action_group(ser, group_number, run_times, estimated_time):
     print(f"Waiting for: {estimated_time} s")
     time.sleep(estimated_time)
 
-def move_servo(action_array, time_ms):
+def move_servo(ser, action_array, time_ms):
     # Command parameters
     command = 0x03  # CMD_MULT_SERVO_MOVE
     num_servos = len(action_array)
@@ -106,25 +106,46 @@ def move_servo(action_array, time_ms):
     print(f"Waiting for: {time_ms / 1000 +1} s")
     time.sleep(time_ms / 1000 + 1)
     
-
-def main():
+def move(angles):
     #create action array each row is a command to a servo with {servo_id, angle}
     action = [
-        {'servo_id': 1, 'angle': 2200},
-        {'servo_id': 2, 'angle': 500},
-        {'servo_id': 3, 'angle': 500},
-        {'servo_id': 4, 'angle': 500},
-        {'servo_id': 5, 'angle': 500},
-        {'servo_id': 6, 'angle': 500}
+        {'servo_id': 1, 'angle': angles[0]},
+        {'servo_id': 2, 'angle': angles[1]},
+        {'servo_id': 3, 'angle': angles[2]},
+        {'servo_id': 4, 'angle': angles[3]},
+        {'servo_id': 5, 'angle': angles[4]},
+        {'servo_id': 6, 'angle': angles[5]}
     ]
 
     while True:
         ser = initialize_serial()
         if ser: 
             try:
-                print("Starting servo control")
-                get_battery_voltage()
-                move_servo(action_array=action, time_ms=500)
+                move_servo(ser, action_array=action, time_ms=500)
+            finally:
+                ser.close()
+                break
+        else:
+            print("Ensure Robot is Connected and Try Again")
+            break
+
+
+def main():
+    #create action array each row is a command to a servo with {servo_id, angle}
+    action = [
+        {'servo_id': 1, 'angle': 2000},
+        {'servo_id': 2, 'angle': 1500},
+        {'servo_id': 3, 'angle': 1500},
+        {'servo_id': 4, 'angle': 1500},
+        {'servo_id': 5, 'angle': 1500},
+        {'servo_id': 6, 'angle': 1500}
+    ]
+
+    while True:
+        ser = initialize_serial()
+        if ser: 
+            try:
+                move_servo(ser, action_array=action, time_ms=500)
             finally:
                 ser.close()
                 break

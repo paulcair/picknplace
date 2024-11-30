@@ -28,7 +28,7 @@ def initialize_serial(port='/dev/ttyUSB0', baudrate=9600, timeout=1):
         return None
 
 
-def get_battery_voltage():
+def get_battery_voltage(ser):
     # Packet to request battery voltage
     packet = [0x55, 0x55, 0x02, 0x0F]  # Header + Length + Command (CMD_GET_BATTERY_VOLTAGE)
     ser.write(bytearray(packet))
@@ -70,7 +70,7 @@ def run_action_group(ser, group_number, run_times, estimated_time):
     print(f"Waiting for: {estimated_time} s")
     time.sleep(estimated_time)
 
-def move_servo(action_array, time_ms):
+def move_servo(ser, action_array, time_ms):
     # Command parameters
     command = 0x03  # CMD_MULT_SERVO_MOVE
     num_servos = len(action_array)
@@ -133,8 +133,8 @@ def main():
         if ser: 
             try:
                 print("Starting servo control")
-                get_battery_voltage()
-                move_servo(action_array=action, time_ms=500)
+                get_battery_voltage(ser)
+                move_servo(ser, action_array=action, time_ms=500)
                 #run_action_group(ser, group_number=0, run_times=1, estimated_time=1)
 
                 # Iterate over servos from 6 down to 1
@@ -151,10 +151,12 @@ def main():
                         move_servo(action_array=this_action, time_ms=100)
                         move_servo(action_array=action, time_ms=1000)
             finally:
+                print("Closing Serial")
                 ser.close()
                 break
         else:
             print("No serial connection")
+            break
 
 if __name__ == "__main__":
     main()

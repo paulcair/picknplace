@@ -16,8 +16,8 @@ import math
 import numpy as np
 import commandRobot
 
-#input desired joint angles (0-180) in degrees and desired claw width (0<x<30)
-theta_1_deg = 90
+# Input desired joint angles (0-180) in degrees and desired claw width (0<x<30)
+theta_1_deg = 0
 theta_2_deg = 90
 theta_3_deg = 90
 theta_4_deg = 90
@@ -38,5 +38,8 @@ S_3 = int(theta_4_deg/180*2000+500)
 S_4 = int(theta_3_deg/180*2000+500)
 S_5 = int(theta_2_deg/180*2000+500)
 S_6 = int(theta_1_deg/180*2000+500)    
+angles = [S_1, S_2, S_3, S_4, S_5, S_6]
+print(angles)
 
-
+# Send the command to move the robot to the desired poisiton.
+commandRobot.move(angles)
