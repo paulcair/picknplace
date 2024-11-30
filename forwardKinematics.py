@@ -16,13 +16,16 @@ import math
 import numpy as np
 import commandRobot
 
+# Starting position
+starting_position = [1500, 1500, 611, 500, 611, 1500]
+
 # Input desired joint angles (0-180) in degrees and desired claw width (0<x<30)
-theta_1_deg = 0
+theta_1_deg = 90
 theta_2_deg = 90
 theta_3_deg = 90
 theta_4_deg = 90
 theta_5_deg = 90
-tool_x = 15
+tool_x = 30
 
 # Convert the inputs into radians for matrix multiplications 
 theta_1 = math.radians(theta_1_deg)
@@ -42,4 +45,6 @@ angles = [S_1, S_2, S_3, S_4, S_5, S_6]
 print(angles)
 
 # Send the command to move the robot to the desired poisiton.
+commandRobot.move(starting_position)
 commandRobot.move(angles)
+commandRobot.move(starting_position)
