@@ -15,6 +15,7 @@ Date: Nov 30th, 2024
 import math
 import numpy as np
 import commandRobot
+from dhMatrices import get_dh_matrices
 
 # Starting position
 starting_position = [1500, 1500, 611, 500, 611, 1500]
@@ -43,6 +44,14 @@ S_5 = int(theta_2_deg/180*2000+500)
 S_6 = int(theta_1_deg/180*2000+500)    
 angles = [S_1, S_2, S_3, S_4, S_5, S_6]
 
+# Pass the theta values and servo 1 (claw) value to the dhMatrices.py script and store the transformation matrices in the variable returned array dh_matrices 
+dh_matrices = get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, S_1)
+
+# Multiply the transformation matrices to get the resulting transfromation matrix from frame 0 to 6
+T0_6 = dh_matrices[0] @ dh_matrices[1] @ dh_matrices[2] @ dh_matrices[3] @ dh_matrices[4] @ dh_matrices[5]
+print(dh_matrices)
+print(T0_6)
+
 def main():
     robot = commandRobot.RobotController()
 
@@ -56,7 +65,6 @@ def main():
         print("Moving Robot...")
         robot.move(starting_position)
         robot.move(angles)
-        robot.move(starting_position)
     except Exception as e:
         print(f"Error during movement: {e}")
     finally:

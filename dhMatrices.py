@@ -21,12 +21,13 @@ def dh_transform(theta, d, a, alpha):
         [0, 0, 0, 1]
     ])
 
-def get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, theta_6):
+def get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, S_1):
     """
     Calculate the D-H transformation matrices for the robot based on the input joint angles.
     
     Parameters:
-    - theta_1, theta_2, theta_3, theta_4, theta_5, theta_6: Joint angles in radians
+    - theta_1, theta_2, theta_3, theta_4, theta_5: Joint angles in radians
+    - S_1: end effector position value (Servo 1)
     
     Returns:
     - A list of D-H transformation matrices
@@ -35,13 +36,18 @@ def get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, theta_6):
     d = [95, 0, 0, 0, 150, 0]  # Link offsets
     a = [0, 105, 98, 0, 0, 0]  # Link lengths
     alpha = [math.radians(270), math.radians(180), 0, math.radians(90), math.radians(270), 0]  # Link twists
-
+    
     # Create the transformation matrices
     T1 = dh_transform(theta_1, d[0], a[0], alpha[0])
     T2 = dh_transform(theta_2, d[1], a[1], alpha[1])
     T3 = dh_transform(theta_3, d[2], a[2], alpha[2])
-    T4 = dh_transform(theta_4, d[3], a[3], alpha[3])
+    T4 = dh_transform(theta_4 + math.radians(90), d[3], a[3], alpha[3])
     T5 = dh_transform(theta_5, d[4], a[4], alpha[4])
-    T6 = dh_transform(theta_6, d[5], a[5], alpha[5])
+    T6 = np.array([
+        [1,0,0,0],
+        [0,1,0,(S_1-1500)*0.03+55],
+        [0,0,1,0],
+        [0,0,0,1]
+    ])
 
     return [T1, T2, T3, T4, T5, T6]
