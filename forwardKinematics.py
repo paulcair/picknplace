@@ -21,11 +21,11 @@ from dhMatrices import get_dh_matrices
 starting_position = [1500, 1500, 611, 500, 611, 1500]
 
 # Input desired joint angles (0-180) in degrees and desired claw width (0<x<30)
-theta_1_deg = 90
-theta_2_deg = 90
-theta_3_deg = 90
-theta_4_deg = 90
-theta_5_deg = 90
+theta_1_deg = 0
+theta_2_deg = 0
+theta_3_deg = 0
+theta_4_deg = 0
+theta_5_deg = 0
 tool_x = 30
 
 # Convert the inputs into radians for matrix multiplications 
@@ -48,7 +48,7 @@ angles = [S_1, S_2, S_3, S_4, S_5, S_6]
 dh_matrices = get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, S_1)
 
 # Multiply the transformation matrices to get the resulting transfromation matrix from frame 0 to 6
-T0_6 = dh_matrices[0] @ dh_matrices[1] @ dh_matrices[2] @ dh_matrices[3] @ dh_matrices[4] @ dh_matrices[5]
+T0_6 = dh_matrices[0] @ dh_matrices[1] @ dh_matrices[2] @ dh_matrices[3] @ dh_matrices[4] 
 print(dh_matrices)
 print(T0_6)
 
@@ -65,6 +65,7 @@ def main():
         print("Moving Robot...")
         robot.move(starting_position)
         robot.move(angles)
+        # robot.move(starting_position)
     except Exception as e:
         print(f"Error during movement: {e}")
     finally:
