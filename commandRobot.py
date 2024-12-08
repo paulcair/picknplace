@@ -17,7 +17,10 @@ Date: Nov 30th, 2024
 import serial
 import time
 
+time_ms = 3000
+
 class RobotController:
+    
     # Define the serial parameters
     def __init__(self, port='/dev/ttyUSB0', baudrate=9600, timeout=1):
         self.ser = self.initialize_serial(port, baudrate, timeout)
@@ -84,7 +87,7 @@ class RobotController:
         print(f"Waiting for: {estimated_time} s")
         time.sleep(estimated_time)
 
-    def move_servo(self, action_array, time_ms):
+    def move_servo(self, action_array):
         if not self.ser:
             print("No serial connection available.")
             return
@@ -139,7 +142,7 @@ class RobotController:
                 {'servo_id': 5, 'angle': angles[4]},
                 {'servo_id': 6, 'angle': angles[5]}
             ]
-            self.move_servo(action_array=action, time_ms=500)
+            self.move_servo(action_array=action)
         except Exception as e:
             print(f"Error moving servos: {e}")
 
