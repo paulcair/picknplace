@@ -22,7 +22,7 @@ starting_position = [1500, 500, 1400, 1500, 2450, 1500]
 
 # Input desired joint angles (0-180) in degrees and desired claw width (0<x<30)
 theta_1_deg = 0
-theta_2_deg = 0
+theta_2_deg = 90
 theta_3_deg = 0
 theta_4_deg = 0
 theta_5_deg = 0
@@ -64,7 +64,7 @@ def main():
         # Send the command to move the robot to the desired position.
         print("Moving Robot...")
         robot.move(angles)
-        robot.move(starting_position)
+        #robot.move(starting_position)
     except Exception as e:
         print(f"Error during movement: {e}")
     finally:
