@@ -41,7 +41,7 @@ def get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, S_1):
     T1 = dh_transform(theta_1, d[0], a[0], alpha[0])
     T2 = dh_transform(theta_2, d[1], a[1], alpha[1])
     T3 = dh_transform(theta_3, d[2], a[2], alpha[2])
-    T4 = dh_transform(theta_4+math.radians(270), d[3], a[3], alpha[3])
+    T4 = dh_transform(theta_4-math.radians(270), d[3], a[3], alpha[3])
     T5 = dh_transform(theta_5, d[4], a[4], alpha[4])
     T6 = np.array([
         [1,0,0,0],
