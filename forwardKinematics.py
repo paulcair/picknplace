@@ -55,7 +55,7 @@ print(T0_6)
 def main():
     robot = commandRobot.RobotController()
 
-    # Check if the serial connection was established successfully
+    # Check if the serial connection was established successfully.
     if robot.ser is None:
         print("Failed to establish serial connection. Exiting.")
         return
