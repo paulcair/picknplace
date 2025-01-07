@@ -44,7 +44,7 @@ S_5 = int(theta_2_deg/180*2000+500)
 S_6 = int(theta_1_deg/180*2000+500)    
 angles = [S_1, S_2, S_3, S_4, S_5, S_6]
 
-# Pass the theta values and servo 1 (claw) value to the dhMatrices.py script and store the transformation matrices in the variable returned array dh_matrices 
+# Pass the theta values and servo 1 (claw) value to the dhMatrices.py script and store the transformation matrices in the variable returned array dh_matrices. 
 dh_matrices = get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, S_1)
 
 # Multiply the transformation matrices to get the resulting transfromation matrix from frame 0 to 6
