@@ -48,7 +48,7 @@ angles = [S_1, S_2, S_3, S_4, S_5, S_6]
 dh_matrices = get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, S_1)
 
 # Multiply the transformation matrices to get the resulting transfromation matrix from frame 0 to 6
-T0_6 = dh_matrices[0] @ dh_matrices[1] #@ dh_matrices[2] @ dh_matrices[3] @ dh_matrices[4] 
+T0_6 = dh_matrices[0] @ dh_matrices[1] #@ dh_matrices[2] @ dh_matrices[3] @ dh_matrices[4].
 print(dh_matrices)
 print(T0_6)
 
