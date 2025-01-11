@@ -28,7 +28,7 @@ theta_4_deg = 0
 theta_5_deg = 90
 tool_x = 30
 
-# Convert the inputs into radians for matrix multiplications 
+# Convert the inputs into radians for matrix multiplications. 
 theta_1 = math.radians(theta_1_deg)
 theta_2 = math.radians(theta_2_deg)
 theta_3 = math.radians(theta_3_deg)
