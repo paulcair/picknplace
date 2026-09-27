@@ -24,7 +24,7 @@ starting_position = [1500, 500, 1400, 1500, 2450, 1500]
 theta_1_deg = 90
 theta_2_deg = 90
 theta_3_deg = 0
-theta_4_deg = 0
+theta_4_deg = 90
 theta_5_deg = 90
 tool_x = 30
 # Convert the inputs into radians for matrix multiplications. 
