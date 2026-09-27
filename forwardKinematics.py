@@ -27,7 +27,6 @@ theta_3_deg = 0
 theta_4_deg = 0
 theta_5_deg = 90
 tool_x = 30
-
 # Convert the inputs into radians for matrix multiplications. 
 theta_1 = math.radians(theta_1_deg)
 theta_2 = math.radians(theta_2_deg)
@@ -49,7 +48,9 @@ dh_matrices = get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, S_1)
 
 # Multiply the transformation matrices to get the resulting transfromation matrix from frame 0 to 6
 T0_6 = dh_matrices[0] @ dh_matrices[1] #@ dh_matrices[2] @ dh_matrices[3] @ dh_matrices[4].
+print("DH Matrices:")
 print(dh_matrices)
+print("Resulting Transformation Matrix T0_6:")
 print(T0_6)
 
 def main():
