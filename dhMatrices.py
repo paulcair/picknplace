@@ -33,8 +33,8 @@ def get_dh_matrices(theta_1, theta_2, theta_3, theta_4, theta_5, S_1):
     - A list of D-H transformation matrices
     """
     # Define the D-H parameters for each joint
-    d = [95, 0, 0, 0, 150]  # Link offsets
-    a = [0, 105, 98, 0, 0]  # Link lengths
+    d = [95, 0, 0, 0, 70+25]  # Link offsets
+    a = [0, 105, 90, 0, 0]  # Link lengths
     alpha = [math.radians(90), math.radians(180), 0, math.radians(270), math.radians(90)]  # Link twists
     
     # Create the transformation matrices
