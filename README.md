@@ -3,6 +3,8 @@ Repository for scrips to run a 6DOF arm with objective to have an AI picknplace 
 
 ## How to operate
 
+An important note about th LeArm. It is controlled using assembly language, and the servo's in its programming are defined backwards from the Tool (denoted as servo 1 or S_1) back to the base (denoted as servo 6, or S_6). This is backwards to typical kinematics where the base is Joint 1 or theta_1 and the tool is Joint 6 or theta_6. Keep the above in mind when going through the forwardKinematics and InverseKinematics code.
+
 ### Step 1: Power on the robot and determine the port it is connected to
 
 Power on the robot, then open a terminal and run this command (for linux)
@@ -42,3 +44,4 @@ sudo python3 forwardKinematics.py
 ```
 
 you may have to input your password for sudo command
+
