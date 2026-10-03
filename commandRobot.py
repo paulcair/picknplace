@@ -128,12 +128,12 @@ class RobotController:
         time.sleep(time_ms / 1000 + 1)
         
     def move(self, angles):
+        """Move all six servos: S_1 gripper, then S_2-S_6 arm."""
         if not self.ser:
             print("No serial connection available.")
             return
         
         try:
-            #create action array each row is a command to a servo with {servo_id, angle}
             action = [
                 {'servo_id': 1, 'angle': angles[0]},
                 {'servo_id': 2, 'angle': angles[1]},
@@ -145,6 +145,35 @@ class RobotController:
             self.move_servo(action_array=action)
         except Exception as e:
             print(f"Error moving servos: {e}")
+
+    def move_arm(self, angles):
+        """Move only the arm (S_2-S_6). Leaves the gripper where it is."""
+        if not self.ser:
+            print("No serial connection available.")
+            return
+
+        try:
+            action = [
+                {'servo_id': 2, 'angle': angles[1]},
+                {'servo_id': 3, 'angle': angles[2]},
+                {'servo_id': 4, 'angle': angles[3]},
+                {'servo_id': 5, 'angle': angles[4]},
+                {'servo_id': 6, 'angle': angles[5]}
+            ]
+            self.move_servo(action_array=action)
+        except Exception as e:
+            print(f"Error moving arm: {e}")
+
+    def set_gripper(self, s1):
+        """Move only the gripper (S_1). Leaves the arm where it is."""
+        if not self.ser:
+            print("No serial connection available.")
+            return
+
+        try:
+            self.move_servo(action_array=[{'servo_id': 1, 'angle': s1}])
+        except Exception as e:
+            print(f"Error moving gripper: {e}")
 
     def close(self):
         if self.ser and self.ser.is_open:
