@@ -29,6 +29,9 @@ Command types
 Author: Paul Cairns
 Date: Oct 3rd, 2026
 """
+import argparse
+import threading
+
 import commandRobot
 from inverseKinematics import (
     DEFAULT_SEED_DEG,
@@ -115,12 +118,78 @@ class CommandRunner:
         self.robot.set_gripper(tool_x_to_s1(tool_x))
 
 
+PLACE_XYZ = [200.0, 0.0, 35.0]
+
+
+def run_demo(color=None, camera_index=None, place_xyz=None):
+    """
+    Keep the camera streaming, grab one block, then pick-place it.
+
+    The preview window stays open on the main thread so you can watch
+    the arm. Robot motion runs in the background.
+    """
+    from detectBlocks import BlockStream, get_one_block
+
+    place_xyz = list(PLACE_XYZ if place_xyz is None else place_xyz)
+    stream = BlockStream(camera_index).start()
+    stream.set_status("Streaming. Looking for a block...")
+
+    robot = commandRobot.RobotController()
+
+    def agent():
+        if not stream.wait_for_frame():
+            stream.set_status("No camera frames. Check --camera.")
+            return
+        target = get_one_block(color=color, stream=stream)
+        if target is None:
+            wanted = color if color else "any color"
+            stream.set_status(f"No {wanted} block found. Camera still live. Press q.")
+            return
+        stream.set_status(
+            f"Picking {target['color']} at { [round(v, 1) for v in target['xyz']] }"
+        )
+        if robot.ser is None:
+            stream.set_status("No robot serial. Camera still live. Press q.")
+            return
+        commands = pick_place_sequence(
+            target["xyz"],
+            place_xyz,
+            close_width=clamp_width(target["width"]),
+        )
+        try:
+            CommandRunner(robot).run(commands)
+            stream.set_status("Pick-place done. Camera still live. Press q.")
+        except Exception as e:
+            stream.set_status(f"Pick-place error: {e}")
+
+    worker = threading.Thread(target=agent, daemon=True)
+    worker.start()
+    try:
+        stream.show()
+    finally:
+        worker.join(timeout=0.5)
+        robot.close()
+
+
 def main():
+    parser = argparse.ArgumentParser(description="Run pick-and-place on the LeArm.")
+    parser.add_argument(
+        "--demo",
+        action="store_true",
+        help="Stream the camera, detect one block, and pick-place it while the preview stays open.",
+    )
+    parser.add_argument("--color", default=None, help="Block color for --demo (red, yellow, green, blue).")
+    parser.add_argument("--camera", type=int, default=None, help="Camera index for --demo.")
+    args = parser.parse_args()
+
+    if args.demo:
+        run_demo(color=args.color, camera_index=args.camera)
+        return
+
     # Example: later replace these with OpenCV detections, e.g.
     #   pick_xyz, width = detect_block("red")
     pick_xyz = [-150, 10.0, 60.0]
-    place_xyz = [200.0, 0.0, 35.0]
-    commands = pick_place_sequence(pick_xyz, place_xyz, close_width=CLOSE_WIDTH)
+    commands = pick_place_sequence(pick_xyz, PLACE_XYZ, close_width=CLOSE_WIDTH)
 
     # An agent can also build the list itself in x, y, z, width:
     # commands = []
