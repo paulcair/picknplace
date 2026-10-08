@@ -53,7 +53,7 @@ COLOR_RANGES = {
         (np.array([40, 70, 50]), np.array([85, 255, 255])),
     ],
     "blue": [
-        (np.array([90, 80, 50]), np.array([130, 255, 255])),
+        (np.array([110, 50, 40]), np.array([130, 255, 255])),
     ],
 }
 
