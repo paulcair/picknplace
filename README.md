@@ -1,7 +1,7 @@
 # picknplace
 Repository for scrips to run a 6DOF arm with objective to have an AI picknplace of 3D printed cubes using openCV to detect objects and find their coordinates
 
-## How to operate
+## How to operate Forward Kinematics
 
 An important note about th LeArm. It is controlled using assembly language, and the servo's in its programming are defined backwards from the Tool (denoted as servo 1 or S_1) back to the base (denoted as servo 6, or S_6). This is backwards to typical kinematics where the base is Joint 1 or theta_1 and the tool is Joint 6 or theta_6. Keep the above in mind when going through the forwardKinematics and InverseKinematics code.
 
@@ -44,4 +44,10 @@ sudo python3 forwardKinematics.py
 ```
 
 you may have to input your password for sudo command
+
+## How to Operate Inverse Kinematics
+
+## How to Run the Pick n Place Agent 
+
+qwen3:8b
 
