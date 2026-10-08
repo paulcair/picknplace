@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Opens the local arm agent. Put this next to detectBlocks.py.
+set -euo pipefail
+cd "$(dirname "$0")"
+if ! ollama list >/dev/null 2>&1; then
+  echo "Ollama is not running. Start it, then: ollama list"
+  exit 1
+fi
+exec python3 block_agent.py "$@"
