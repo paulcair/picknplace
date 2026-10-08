@@ -47,7 +47,9 @@ you may have to input your password for sudo command
 
 ## How to Operate Inverse Kinematics
 
+## How to run Pick n Place
+
 ## How to Run the Pick n Place Agent 
 
-qwen3:8b
+goose, ollama, qwen3:8b
 
